@@ -3,7 +3,7 @@ import React from "react";
 interface Carro {
   marca: string;
   modelo: string;
-  ano: string;
+  ano: number;
   quilometragem: string;
   preco: string;
   descricao: string;

@@ -5,7 +5,7 @@ import PreviewCarro from "./previewcarro";
 interface Carro {
   marca: string;
   modelo: string;
-  ano: string;
+  ano: number;
   quilometragem: string;
   preco: string;
   descricao: string;
@@ -30,10 +30,10 @@ const FormularioCarro: React.FC<Props> = ({ adicionarCarro, carro, setCarro }) =
     setCarro({
       marca: "",
       modelo: "",
-      ano: "",
+      ano: 0,
       quilometragem: "",
       preco: "",
-      descricao: "",
+      descricao: "",    
     });
   };
 
