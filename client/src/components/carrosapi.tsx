@@ -1,5 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent, Dispatch, SetStateAction } from "react";
 import FormInput from "./forminput";
+import PreviewCarro from "./previewcarro";
 
 interface Carro {
   marca: string;
@@ -12,19 +13,12 @@ interface Carro {
 
 interface Props {
   adicionarCarro: (carro: Carro) => void;
+  carro: Carro;
+  setCarro: Dispatch<SetStateAction<Carro>>;
 }
 
-const FormularioCarro: React.FC<Props> = ({ adicionarCarro }) => {
-  const [carro, setCarro] = useState<Carro>({
-    marca: "",
-    modelo: "",
-    ano: "",
-    quilometragem: "",
-    preco: "",
-    descricao: "",
-  });
+const FormularioCarro: React.FC<Props> = ({ adicionarCarro, carro, setCarro }) => {
 
-  // 👇 Adiciona tipo correto para evento de input/textarea
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -32,7 +26,6 @@ const FormularioCarro: React.FC<Props> = ({ adicionarCarro }) => {
     setCarro((prev) => ({ ...prev, [name]: value }));
   };
 
-  // 👇 Adiciona tipo correto para evento de submit de formulário
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     adicionarCarro(carro);
@@ -53,8 +46,8 @@ const FormularioCarro: React.FC<Props> = ({ adicionarCarro }) => {
             <h1 className="text-4xl font-bold mt-20 mb-5 ">Adicionar Novo Carro</h1>
             <h2 className="">Preencha abaixo para adicionar o carro</h2>
         </div>
-        <div className="p-25 border border-gray-500 rounded mb-4 gap-4 ml-25 mr-175">
-            <h1 className="-mt-15 mb-15 -ml-8 text-3xl font-bold">Detalhes do carro</h1>
+        <div className="p-15 border border-gray-500 rounded mb-4 gap-4 ml-25 mr-175">
+            <h1 className="-mt-5 mb-15 -ml-8 text-3xl font-bold">Detalhes do carro</h1>
             <FormInput
                 name="marca"
                 value={carro.marca}
@@ -83,17 +76,18 @@ const FormularioCarro: React.FC<Props> = ({ adicionarCarro }) => {
                 name="quilometragem"
                 value={carro.quilometragem}
                 onChange={handleChange}
-                placeholder="Quilometragem"
+                placeholder="km"
                 type="number"
                 label="Quilometragem"
             />
         </div>
-        <div className="p-25 border border-gray-500 rounded mb-4 gap-4 ml-25 mr-175">
+        <div className="p-15 border border-gray-500 rounded mb-4 gap-4 ml-25 mr-175">
+            <h1 className="-mt-5 mb-15 -ml-8 text-3xl font-bold">Preço e Descrição</h1>
             <FormInput
                 name="preco"
                 value={carro.preco}
                 onChange={handleChange}
-                placeholder="Preço"
+                placeholder="R$"
                 type="number"
                 label="Preço"
             />
@@ -104,9 +98,14 @@ const FormularioCarro: React.FC<Props> = ({ adicionarCarro }) => {
                 placeholder="Descrição"
                 label="Descrição"
                 required
+                multiline
+                rows={6}
             />
         </div>
-      <button type="submit">Adicionar</button>
+        <div>
+          <button type="submit" className="">Adicionar</button>
+        </div>
+      
     </form>
   );
 };
